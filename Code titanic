@@ -1,0 +1,57 @@
+#Importing libraries and setting working directory
+
+import pandas as pd
+import os
+os.chdir('C:\Users\happelgren\Documents\Projet titanic')
+
+
+#Importing cvs data
+
+data1 = 'test.csv'
+data2 = 'train.csv'
+test = pd.read_csv(data1)
+train = pd.read_csv(data2)
+
+#Adding a column to test data for survived and a dummy variable in both dataset equals to 1 when the observation belongs to train dataset
+
+test['Survived']='NaN'
+test['Train']=0
+train['Train']=1
+
+# list(test)
+# list(train)
+
+test=test[['PassengerId','Survived','Pclass','Name','Sex','Age','SibSp','Parch','Ticket','Fare','Cabin','Embarked', 'Train']]
+
+
+#Merging the two datasets
+
+data=pd.concat([train, test])
+ind=[]
+for i in range(0, len(data.index)):
+    ind.append(i)
+data.index=ind
+
+#descriptive statistics Pclass
+
+import numpy as np
+data=data.replace('NaN',np.NaN)
+Survived_summary={}
+
+
+
+Survived_summary.update({'Number of obs' : data['Survived'].count(),'Number of NaN' :len(data['Survived'])-data['Survived'].count()})
+Survived_summary
+
+
+data[data['Survived']==1].count()['Survived']
+
+
+
+#def a function to do that for all variable depending on their type. Trat NaN not as zero but missing !
+
+#Pclass_summary.append("number of NaN" : np.isnan(data['Survived']).sum())
+
+#data['Survived'].describe()
+
+#data.iat[1284,1]
